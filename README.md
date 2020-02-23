@@ -1,4 +1,4 @@
-# Chat-bot-project-for-cloud-computing
+# LINE Chat bot 
 Group 2
 
 Cheong Chin Wang 19482442
