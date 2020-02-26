@@ -19,7 +19,7 @@ If there are too many FAQ, we may allow users to type in some keywords for quest
 To extend this feature, we may use google API as an external service for expanding answers.
 
 
-**3.Query about nearby patients or suspected patients. **
+**3.Query about nearby patients or suspected patients.**
 
 
 
