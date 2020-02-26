@@ -19,7 +19,20 @@ If there are too many FAQ, we may allow users to type in some keywords for quest
 To extend this feature, we may use google API as an external service for expanding answers.
 
 
-3.
+3.Query about nearby patients or suspected patients. 
+
+
+
+When you ask the chat robot about the epidemic situation nearby, the robot will reply with a labeled map. 
+
+
+
+Check which places around you have infected people, adjust your travel route and stay away from the epidemic area. For such tools, the accuracy of data is the most important. 
+Rumors and false information will not only cause panic, but also hinder the spread of the epidemic. All data without official confirmation will not be adopted. Support the data display of fine to cell and street. You can check whether there are infected people in the community you live in. 
+
+
+
+We can use the Google map API to extend this feature. 
 
 
 
