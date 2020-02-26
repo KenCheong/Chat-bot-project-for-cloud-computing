@@ -9,7 +9,7 @@ We are going to design a LINE chatbot.
   
   Moreover, we may capture some information about how many new confirmed cases worldwide. As we know the coronavirus spread fast in China. But it seems to start spreading increasingly in some other countries to which people who contains coronavirus travel. Gathering these information will remind conrovirus for people who want to travel these countries. 
 
-2.Query about FAQ(frequently asked questions) about coronavirus diseases.
+2.Query about FAQ(frequently asked questions) of coronavirus diseases.
 
 When the user try to query some FAQ, the chat bot will display a set of question about coronavirus diseases. For example, 
 How to prevent COVID-19? When the user ask the question, the chatbot will display the answer. All FAQ and corresponding answers will be collected from government or WHO pages to guarantee they are trustworthy.
