@@ -1,0 +1,4 @@
+flask
+redis
+line-bot-sdk
+google-cloud-translate==1.7.0

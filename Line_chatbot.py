@@ -3,6 +3,11 @@ from __future__ import unicode_literals
 import os
 import sys
 import redis
+from google.cloud import translate
+
+
+              
+
 
 from argparse import ArgumentParser
 
@@ -174,7 +179,7 @@ def handle_TextMessage(event):
 
 
     elif state==2:##reply FAQ
-        output='You are asking some FAQ about coronavirus,please enter your keywords or relpy \'recommend\' to show some recommended questions\n'
+        output='You are asking some FAQ about coronavirus,please enter your keywords or reply \'recommend\' to show some recommended questions\n'
  #       state=4
         redis1.set('state',4)
 
@@ -205,6 +210,10 @@ def handle_TextMessage(event):
 
 
     output=output+'\n if you want to use other functionalites of the chatbot,reply \'quit\''
+    translate_client = translate.Client()
+    result = translate_client.translate(output,target_language='zh')
+    print(u'Translation: {}'.format(result['translatedText']))
+    output=result['translatedText']
 
    # line_bot_api.reply_message(
     #    event.reply_token,
