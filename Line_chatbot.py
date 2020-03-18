@@ -46,6 +46,18 @@ HOST = "redis-19109.c8.us-east-1-3.ec2.cloud.redislabs.com"
 PWD = "egM7Xs9A8EVuLcgye1wbObHKBKq2aVT7"
 PORT = "19109" 
 
+news = {}
+fobj=open('./news.txt','r')
+count=0
+for line in fobj.readlines():
+    line=line.strip('\n')
+    if count%2==0:
+      key=line
+    else:
+      news[key]=line
+    count+=1
+#
+	
 redis1 = redis.Redis(host = HOST, password = PWD, port = PORT)
 
 redis1.set('state','0')
@@ -176,7 +188,18 @@ def handle_TextMessage(event):
             #output='Hi, to use this chat bot-reply 1, ask some news about coronavirusreply 2, ask some frequently asked questions about coronavirusreply 3, ask the location about nearby patients or suspected patients'
     if state==1:##reply news
         output='You are asking some news about coronavirus\n'
-
+	#while loop to ask about the news
+	while True:
+	    msg = input("Please enter your query date (start from 2020/3/16)(type 'quit' to exit):").strip('\n')
+	    if msg == 'quit' :
+	       break
+	    if msg == '':
+	       continue
+	    if str(msg) in news:
+	       print(news.get(str(msg)))
+	    else:
+	       print('sorry,it is not the appropriate date in our stroage')
+	 redis1.set('state',0)
 
     elif state==2:##reply FAQ
         output='You are asking some FAQ about coronavirus,please enter your keywords or reply \'recommend\' to show some recommended questions\n'
