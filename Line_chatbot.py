@@ -57,6 +57,18 @@ def load_news():
         count+=1
     return news
 
+def load_hospital():
+    hospital = {}
+    fobj=open('./hospital.txt','r')
+    count=0
+    for line in fobj.readlines():
+        line=line.strip('\n')
+        if count%2==0:
+          key=line
+        else:
+          hospital[key]=line
+        count+=1
+    return hospital
 
 
 HOST = "redis-19109.c8.us-east-1-3.ec2.cloud.redislabs.com"
@@ -71,6 +83,7 @@ redis1.set('language','en')
 #state=0
 FAQ_list=load_FAQ()
 news=load_news()
+hospital=load_hospital()
 #print(FAQ_list)
 #1/0
 FAQ=None
@@ -84,6 +97,7 @@ state
 4 - FAQ show question case
 5 - FAQ show answer case
 6 - news show answer case
+7 - hospital show answer case
 '''
 
 
@@ -118,6 +132,7 @@ def callback():
 #    state=0
     FAQ_list=load_FAQ()
     news=load_news()
+    hospital=load_hospital()
     FAQ=None
     signature = request.headers['X-Line-Signature']
 
@@ -213,7 +228,9 @@ def handle_TextMessage(event):
         redis1.set('state',4)
 
     elif state==3:##reply map
-        output='You are asking the location about nearby patients or suspected patients\n'
+        #output='You are asking the location about nearby patients or suspected patients\n'
+        output='You are asking the nearby hospitals,please enter your current location\n'
+        redis1.set('state',7)
 
 
     elif state==4:
@@ -238,7 +255,13 @@ def handle_TextMessage(event):
             redis1.set('state',2)
     elif state==6:
             output=news.get(msg.strip('\n'))
-            redis1.set('state',1)
+#            redis1.set('state',1)
+            if msg.strip('\n') not in news:
+                output='invalid date'
+    elif state==7:
+            output=hospital.get(msg.strip('\n'))
+            if msg.strip('\n') not in hospital:
+                output='invalid address'
 
 
 
