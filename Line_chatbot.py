@@ -188,18 +188,7 @@ def handle_TextMessage(event):
             #output='Hi, to use this chat bot-reply 1, ask some news about coronavirusreply 2, ask some frequently asked questions about coronavirusreply 3, ask the location about nearby patients or suspected patients'
     if state==1:##reply news
         output='You are asking some news about coronavirus\n'
-	msg = input("Please enter your query date (start from 2020/3/16)(type 'quit' to exit):").strip('\n')
-	#while loop to ask about the news
-	while True:	    
-	    if msg == 'quit' :
-	       break
-	    if msg == '':
-	       continue
-	    if str(msg) in news:
-	       print(news.get(str(msg)))
-	    else:
-	       print('sorry,it is not the appropriate date in our stroage')
-	 redis1.set('state',0)
+
 
     elif state==2:##reply FAQ
         output='You are asking some FAQ about coronavirus,please enter your keywords or reply \'recommend\' to show some recommended questions\n'
