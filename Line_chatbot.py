@@ -42,28 +42,35 @@ def load_FAQ():
             FAQ_list[-1][1]=line
         count+=1
     return FAQ_list
+
+def load_news():
+
+    news = {}
+    fobj=open('./news.txt','r')
+    count=0
+    for line in fobj.readlines():
+        line=line.strip('\n')
+        if count%2==0:
+          key=line
+        else:
+          news[key]=line
+        count+=1
+    return news
+
+
+
 HOST = "redis-19109.c8.us-east-1-3.ec2.cloud.redislabs.com"
 PWD = "egM7Xs9A8EVuLcgye1wbObHKBKq2aVT7"
 PORT = "19109" 
 
-news = {}
-fobj=open('./news.txt','r')
-count=0
-for line in fobj.readlines():
-    line=line.strip('\n')
-    if count%2==0:
-      key=line
-    else:
-      news[key]=line
-    count+=1
-#
-	
 redis1 = redis.Redis(host = HOST, password = PWD, port = PORT)
 
 redis1.set('state','0')
+redis1.set('language','en')
 ##global data
 #state=0
 FAQ_list=load_FAQ()
+news=load_news()
 #print(FAQ_list)
 #1/0
 FAQ=None
@@ -76,6 +83,7 @@ state
 3 - map case
 4 - FAQ show question case
 5 - FAQ show answer case
+6 - news show answer case
 '''
 
 
@@ -109,6 +117,7 @@ def search_FAQ(keywords):
 def callback():
 #    state=0
     FAQ_list=load_FAQ()
+    news=load_news()
     FAQ=None
     signature = request.headers['X-Line-Signature']
 
@@ -182,12 +191,20 @@ def handle_TextMessage(event):
         elif msg=='3':
             redis1.set('state',3)
             state=3
+        elif msg.strip('\n')=='zh':
+            output='chinese mode.\n'
+            print(output)
+            redis1.set('language','zh')
+        elif msg.strip('\n')=='en':
+            redis1.set('language','en')
+            output='english mode.\n'
 
         else:
-            output='Hi, to use this chat bot-\nreply 1, ask some news about coronavirus\nreply 2, ask some frequently asked questions about coronavirus\nreply 3, ask the location about nearby patients or suspected patients\n'
+            output='Hi, to use this chat bot-\nreply 1, ask some news about coronavirus\nreply 2, ask some frequently asked questions about coronavirus\nreply 3, ask the location about nearby patients or suspected patients \n \n to choose english,reply en \n to choose chinese, reply zh\n'
             #output='Hi, to use this chat bot-reply 1, ask some news about coronavirusreply 2, ask some frequently asked questions about coronavirusreply 3, ask the location about nearby patients or suspected patients'
     if state==1:##reply news
-        output='You are asking some news about coronavirus\n'
+        output='You are asking some news about coronavirus,please enter date\n'
+        redis1.set('state',6)
 
 
     elif state==2:##reply FAQ
@@ -219,13 +236,22 @@ def handle_TextMessage(event):
             output=FAQ_list[int(FAQ[int(msg)])][1]
             #output=FAQ_list[int.from_bytes(FAQ[int(msg)])][1]
             redis1.set('state',2)
+    elif state==6:
+            output=news.get(msg.strip('\n'))
+            redis1.set('state',1)
 
 
-    output=output+'\n if you want to use other functionalites of the chatbot,reply \'quit\''
-    translate_client = translate.Client()
-    result = translate_client.translate(output,target_language='zh')
-    print(u'Translation: {}'.format(result['translatedText']))
-    output=result['translatedText']
+
+    if redis1.get('language')==b'zh':
+        translate_client = translate.Client()
+        result = translate_client.translate(output,target_language='zh')
+        print(u'Translation: {}'.format(result['translatedText']))
+        output=result['translatedText']
+        result2 = translate_client.translate('\n \n if you want to use other functionalites of the chatbot,reply \'quit\'',target_language='zh')
+        output=output+'\n \n'+result2['translatedText']
+    else:
+        output=output+'\n \n if you want to use other functionalites of the chatbot,reply \'quit\''
+    print('lan',str(redis1.get('language')))
 
    # line_bot_api.reply_message(
     #    event.reply_token,
