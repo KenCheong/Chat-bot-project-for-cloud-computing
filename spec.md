@@ -5,9 +5,11 @@ We are going to design a LINE chatbot.
 
 **1.Query about the summary of news in consideration of coronavirus.**
   
-  The news may cover: How many new confirmed cases today or on certain date; how many cases of new recovery or what's the recovery rate right now. With data of this, pubilc will have a basic understanding of what is going on right now.
+The news may cover: How many new confirmed cases today or on certain date; how many cases of new recovery or what's the recovery rate right now. What area is spreading fastly in condition of coronavarius. Which country isolate tourist. What area needs more supplies. With data of this, pubilc will have a basic understanding of what is going on right now. 
   
-  Moreover, we may capture some information about how many new confirmed cases worldwide. As we know, the coronavirus spread fast in China. But it seems to start spreading increasingly in some other countries to which people who contain coronavirus travel. Gathering this information will remind coronavirus for people who want to travel to these countries. 
+Moreover, we may capture some information about how many new confirmed cases worldwide. As we know, the coronavirus spread fast in China. But it seems to start spreading increasingly in some other countries to which people who contain coronavirus travel. Gathering this information will remind coronavirus for people who want to travel to these countries. 
+  
+The coronavirus have spread worldwide overtime. China control its conditional well now. With the turns of Japan, South Korea and other countries, the United States has become the most serious country. If people are aware of news that coronavirus spreading widely at some certain countries, they would protect themselves in advance.
 
 **2.Query about FAQ(frequently asked questions) of coronavirus diseases.**
 
